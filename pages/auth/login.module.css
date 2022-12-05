@@ -1,0 +1,15 @@
+
+.authWrapper {
+    /* justify-content: space-between; */
+    text-align: center;
+    color: black;
+}
+
+
+.authWrapper div, .authWrapper label {
+    margin: 20px;
+}
+
+.authWrapper a {
+    margin: 15px;
+}

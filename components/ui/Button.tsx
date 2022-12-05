@@ -1,13 +1,14 @@
+import { FormEvent, PropsWithChildren } from 'react'
+import styles from './Button.module.css'
 
-type ButtonProps = {
-    text: string
-    onClick: () => void
-}
+type ButtonProps = PropsWithChildren< {
+    onClick: (e: FormEvent) => void
+}>
 
 export const Button = (props: ButtonProps) => {
     return (
         <>
-            <button onClick={props.onClick}>{props.text}</button>
+            <button className={styles.button} onClick={props.onClick}>{props.children}</button>
         </>
     )
 }
