@@ -4,6 +4,7 @@
     background-color: #208075;
     cursor: pointer;
     width: 150px;
+    font-size: 1.3rem;
 }
 
 .button:focus, .button:hover {

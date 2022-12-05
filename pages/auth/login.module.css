@@ -3,11 +3,13 @@
     /* justify-content: space-between; */
     text-align: center;
     color: black;
+    font-size: 1.3rem;
 }
 
 
-.authWrapper div, .authWrapper label {
-    margin: 20px;
+.authWrapper div, .authWrapper label, .authWrapper input {
+    font-size: 1.3rem;
+    margin: 10px;
 }
 
 .authWrapper a {

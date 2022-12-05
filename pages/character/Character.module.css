@@ -1,0 +1,11 @@
+
+.characterForm {
+    justify-content: center;
+    color: black;
+    text-align: center;
+}
+
+.characterForm label, .characterForm input {
+    margin: 15px;
+    font-size: 1.3rem;
+}

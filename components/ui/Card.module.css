@@ -3,4 +3,5 @@
 .card {
     background-color: #6a6;
     box-shadow: 0 0 15px lime;
+    margin: 15px    ;
 }
