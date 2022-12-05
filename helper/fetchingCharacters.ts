@@ -17,7 +17,6 @@ export const fetchingCharacters = async () => {
     newhash
   );
 
-  console.log('fetching...');
   while (characters.length < totalAmount) {
     const marvelURL = `https://gateway.marvel.com/v1/public/characters?offset=${offset}&limit=100&ts=${ts}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
     const response = await fetch(marvelURL);

@@ -1,10 +1,11 @@
 // domain.com/characters
 
 import { useEffect, useState } from 'react';
-import { CharacterCard } from '../../components/ui/CharacterCard';
+import { CharacterList } from '../../components/Characters/CharacterList';
+import { Spinner } from '../../components/ui/Spinner';
 import { fetchingCharacters } from '../../helper/fetchingCharacters';
 
-let characters: object[] = [];
+let characters: any[] = [];
 
 const Characters = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -14,13 +15,18 @@ const Characters = () => {
     fetchingCharacters().then((data) => {
       setIsLoading(false);
       characters = data;
+      console.log(characters);
+      
     });
-  }, []); // no depencies so it loads directly at start and never again
+  }, []); // no dependencies so it loads directly at start and never again
   
   return (
-    <h1>Here should be a list of 10 characters </h1>;
-    {}
-    <CharacterCard characters={characters}></CharacterCard>;
+    <>
+    {isLoading && <Spinner />}
+    {!isLoading &&
+    <CharacterList characters={characters}></CharacterList>
+}
+    </>
   )
   
 };

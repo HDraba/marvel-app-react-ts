@@ -1,12 +1,13 @@
 import { PropsWithChildren } from "react";
+import styles from './CharacterCard.module.css'
 
-type CharacterCardProps = PropsWithChildren<{
-    characters: object[]
-}>
+// type CharacterCardProps = PropsWithChildren<{
+    // characters: object[]
+// }>
 
 
-export const CharacterCard = (props: CharacterCardProps) => {
+export const CharacterCard = (props: PropsWithChildren) => {
     return (
-        <div>{props.children}</div>
+        <div className={styles.charCard}>{props.children}</div>
     )
 }
