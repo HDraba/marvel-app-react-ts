@@ -1,22 +1,21 @@
 // our-domain.com/character
 
-import Router from 'next/router';
+import Router, { useRouter } from 'next/router';
 import { FormEvent, useRef, useState, useTransition } from 'react';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import styles from './Character.module.css';
 
-
-
 const Character = () => {
-
+  const router = useRouter()
   const nameRef = useRef<HTMLInputElement>(null);
 
   const searchButtonClickHandler = (event: FormEvent) => {
     event.preventDefault();
     const enteredName = nameRef.current!.value;
-
     console.log(enteredName);
+
+    router.push(`/character/${enteredName}`)
   };
 
   return (

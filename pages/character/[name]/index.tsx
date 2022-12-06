@@ -2,7 +2,7 @@
 
 import { ftruncate } from 'fs';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { CharacterCard } from '../../../components/ui/CharacterCard';
 
 import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../../private/keys';
@@ -31,6 +31,9 @@ const Character = () => {
 
   let marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
 
+  // const fetchSingleCharacter = useCallback(() => {
+
+  // }, [])
   useEffect(() => {
     setIsLoading(true);
     const wrapperAsyncFunction = async () => {
