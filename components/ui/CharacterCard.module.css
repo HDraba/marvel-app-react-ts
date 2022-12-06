@@ -1,9 +1,8 @@
-
-
 .charCard {
     align-items: center;
     justify-content: center;
     box-shadow: 0 0 15px lime;
+    border-radius: 15px;
     background-color: #208075;
     margin: 15px;
     width: 19rem;

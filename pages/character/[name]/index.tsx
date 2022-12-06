@@ -1,13 +1,13 @@
 // our-domain.com/character/[name]
 
-import { ftruncate } from 'fs';
 import { useRouter } from 'next/router';
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { CharacterCard } from '../../../components/ui/CharacterCard';
 
 import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../../private/keys';
 
 import md5 from 'md5';
+import { GetServerSideProps } from 'next';
 
 type SingleCharacter = {
   id: number;
@@ -16,48 +16,63 @@ type SingleCharacter = {
   thumbnail: { path: string; extension: string };
 };
 
-const timestamp = new Date().getTime();
-const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  const name = context.params?.name
 
-let charData: SingleCharacter;
+  const timestamp = new Date().getTime();
+  const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
+  const marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
+  
+  const response = await fetch(marvelUrl);
+  const { data } = await response.json();
+  const newCharacterData = data.results[0];
 
-let characterData: SingleCharacter;
+  return {props: {character: newCharacterData }}
+};
 
-const Character = () => {
+type CharacterProps = {
+  character?: SingleCharacter
+}
+
+const Character = ({character}: CharacterProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [characterData, setCharacterData] = useState<SingleCharacter | undefined>(
+    character
+  );
 
   const router = useRouter();
   const name = router.query.name;
 
-  let marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
-
-  // const fetchSingleCharacter = useCallback(() => {
-
-  // }, [])
+  // not serverside executed - so you have to hand over the missing parts via serversideprops
   useEffect(() => {
     setIsLoading(true);
     const wrapperAsyncFunction = async () => {
-      const getCharByName = async (url: string): Promise<SingleCharacter> => {
-        const response = await fetch(url);
+        const timestamp = new Date().getTime();
+        const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
+        const marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
+        
+        const response = await fetch(marvelUrl);
         const { data } = await response.json();
-        charData = data.results[0];
-        return charData;
-      };
-      characterData = await getCharByName(marvelUrl);
+        const newCharacterData = data.results[0];
+        setCharacterData(newCharacterData);
+
       setIsLoading(false);
     };
     wrapperAsyncFunction();
-  }, [router]);
+  }, [name]);
 
   console.log('Character Data: ', characterData);
   return (
     <CharacterCard>
       {/* <h2>{name}</h2> */}
       {!isLoading && characterData && <h1>{characterData.name}</h1>}
-      {!isLoading && characterData && <h2>{characterData.description}</h2>}
       {!isLoading && characterData && (
-        <img src={characterData.thumbnail.path} alt={characterData.name} />
+        <img
+          src={`${characterData.thumbnail.path}.${characterData.thumbnail.extension}`}
+          alt={characterData.name}
+        />
       )}
+      {!isLoading && characterData && <h2>{characterData.description}</h2>}
     </CharacterCard>
   );
 };

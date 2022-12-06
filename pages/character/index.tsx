@@ -4,9 +4,9 @@ import Router, { useRouter } from 'next/router';
 import { FormEvent, useRef, useState, useTransition } from 'react';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
-import styles from './Character.module.css';
+import styles from './SearchCharacter.module.css';
 
-const Character = () => {
+const SearchCharacter = () => {
   const router = useRouter()
   const nameRef = useRef<HTMLInputElement>(null);
 
@@ -36,4 +36,4 @@ const Character = () => {
   );
 };
 
-export default Character;
+export default SearchCharacter;

@@ -1,5 +1,6 @@
-import Character from '../../pages/character';
+import SearchCharacter from '../../pages/character';
 import { CharacterCard } from '../ui/CharacterCard';
+import Link from 'next/link';
 
 export type CharacterInstanceProps = {
   // id: number;
@@ -23,6 +24,7 @@ export const CharacterInstance = (props: CharacterInstanceProps) => {
       <div>
         {props.description && <p id="desc">Description: {props.description}</p>}
       </div>
+      <p>Want more? click <Link href={`/character/${props.name}`}>here</Link></p>
     </CharacterCard>
   );
 };
