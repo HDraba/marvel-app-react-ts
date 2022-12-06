@@ -24,27 +24,37 @@ let charData: SingleCharacter;
 let characterData: SingleCharacter;
 
 const Character = () => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const router = useRouter();
   const name = router.query.name;
 
   let marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
 
   useEffect(() => {
-    const getCharByName = async (url: string) => {
-      const response = await fetch(url);
-      const { data } = await response.json();
-      charData = data.results[0];
-      console.log(charData);
-      return charData;
+    setIsLoading(true);
+    const wrapperAsyncFunction = async () => {
+      const getCharByName = async (url: string): Promise<SingleCharacter> => {
+        const response = await fetch(url);
+        const { data } = await response.json();
+        charData = data.results[0];
+        return charData;
+      };
+      characterData = await getCharByName(marvelUrl);
+      setIsLoading(false);
     };
-    characterData = getCharByName(marvelUrl);
+    wrapperAsyncFunction();
   }, [router]);
 
+  console.log('Character Data: ', characterData);
   return (
     <CharacterCard>
-      <h1>{name}</h1>
-      <h2>{characterData.name}</h2>
-      <img src={characterData.thumbnail.path} alt={characterData.name} />
+      {/* <h2>{name}</h2> */}
+      {!isLoading && characterData && <h1>{characterData.name}</h1>}
+      {!isLoading && characterData && <h2>{characterData.description}</h2>}
+      {!isLoading && characterData && (
+        <img src={characterData.thumbnail.path} alt={characterData.name} />
+      )}
     </CharacterCard>
   );
 };
