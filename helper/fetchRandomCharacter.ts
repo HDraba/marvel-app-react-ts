@@ -44,7 +44,6 @@ export const fetchRandomCharacter = async () => {
   const id = await getRandomID();
 
   const response = await fetch(
-    // `https://gateway.marvel.com3/v1/public/characters/1010699?apikey=42f31ac4860e88d9e4a388b9af843f02`
     `https://gateway.marvel.com/v1/public/characters/${id}?apikey=${PUBLIC_API_KEY}`
   );
   const { data } = await response.json();
