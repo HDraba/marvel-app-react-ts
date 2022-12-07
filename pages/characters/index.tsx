@@ -33,5 +33,3 @@ const Characters = () => {
 
 export default Characters;
 
-// loading states, some other card for a character and a single character
-// login validation
