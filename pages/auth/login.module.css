@@ -1,17 +1,31 @@
-
 .authWrapper {
-    /* justify-content: space-between; */
-    text-align: center;
-    color: black;
-    font-size: 1.3rem;
+  /* justify-content: space-between; */
+  text-align: center;
+  color: black;
+  font-size: 1.3rem;
 }
 
-
-.authWrapper div, .authWrapper label, .authWrapper input {
-    font-size: 1.3rem;
-    margin: 10px;
+.authWrapper div,
+.authWrapper label,
+.authWrapper input {
+  font-size: 1.3rem;
+  margin: 10px;
 }
 
 .authWrapper a {
-    margin: 15px;
+  margin: 15px;
+}
+
+.invalid input {
+  border: 1px solid #b40e0e;
+  background-color: #fddddd;
+}
+
+.invalid input:focus {
+  border-color: #ff8800;
+  background-color: #fbe8d2;
+}
+
+.errorText {
+  color: #b40e0e;
 }

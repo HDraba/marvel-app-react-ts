@@ -6,68 +6,99 @@ import Link from 'next/link';
 import styles from './login.module.css';
 
 const Login = () => {
-  const [usernameIsValid, setUsernameIsValid] = useState<boolean>(true);
-  const [passwordIsValid, setPasswordIsValid] = useState<boolean>(true);
-  const [usernameTouched, setUsernameTouched] = useState<boolean>(false)
-  const [passwordTouched, setPasswordTouched] = useState<boolean>(false)
+  const [enteredUsername, setEnteredUsername] = useState<string>('');
+  const [enteredPassword, setEnteredPassword] = useState<string>('');
 
-  // const [formIsValid, setFormIsValid] = useState<boolean>(false)
+  const [usernameTouched, setUsernameTouched] = useState<boolean>(false);
+  const [passwordTouched, setPasswordTouched] = useState<boolean>(false);
 
-  // just validate if true and not empty
+  let usernameIsValid = enteredUsername.trim() !== '';
+        <div><p className='error-text'>Please enter a valid username and password</p></div>
+        const usernameIsInvalid = !usernameIsValid && usernameTouched;
+  
 
-  const usernameRef = useRef<HTMLInputElement>(null);
-  const passwordRef = useRef<HTMLInputElement>(null);
+  let passwordIsValid =
+    enteredPassword.trim() !== '' && enteredPassword.length > 5;
+  const passwordIsInvalid = !passwordIsValid && passwordTouched;
+
+  let formIsValid = false;
+
+  if (usernameIsValid && passwordIsValid) {
+    formIsValid = true;
+  }
+
+  const usernameChangeHandler = (event: FormEvent<HTMLInputElement>) => {
+    setEnteredUsername(event.currentTarget?.value);
+  };
+
+  const passwordChangeHandler = (event: FormEvent<HTMLInputElement>) => {
+    setEnteredPassword(event.currentTarget?.value);
+  };
 
   const onBlurUsernameHandler = () => {
-    setUsernameTouched(true)
-    const enteredUsername = usernameRef.current?.value;
-    if (enteredUsername) {
-      if (enteredUsername !== '' && enteredUsername.length > 5) {
-        setUsernameIsValid(true);
-      }
-    }
+    setUsernameTouched(true);
   };
 
   const onBlurPasswordHandler = () => {
-    setPasswordTouched(true)
-    const enteredPassword = passwordRef.current?.value;
-    if (enteredPassword) {
-      if (enteredPassword !== '' && enteredPassword.length > 5) {
-        setUsernameIsValid(true);
-      }
-    }
+    setPasswordTouched(true);
   };
 
   const submitHandler = (event: FormEvent) => {
     event.preventDefault();
-  
-    if (usernameIsValid && passwordIsValid) {
-      // send data
+    setUsernameTouched(true);
+    setPasswordTouched(true);
+
+    if (!usernameIsValid || !passwordIsValid) {
+      return;
     }
+    setEnteredUsername('');
+    setEnteredPassword('');
+    setUsernameTouched(false);
+    setPasswordTouched(false);
   };
+  const usernameClasses = usernameIsInvalid ? 'username invalid' : 'username';
+
+  const passwordClasses = passwordIsInvalid ? 'password invalid' : 'password';
 
   return (
     <Card>
       <form className={styles.authWrapper}>
         <h1>Login</h1>
-        <div className={styles.username}>
+        <div className={usernameClasses}>
           <label htmlFor="username">Username:</label>
           <input
-            ref={usernameRef}
             type="text"
             id="username"
             onBlur={onBlurUsernameHandler}
+            onChange={usernameChangeHandler}
+            value={enteredUsername}
           />
         </div>
-        <div className={styles.password}>
+        {usernameIsInvalid && (
+          <div>
+            <p className=
+            {styles.errorText}>
+              Please enter a valid username and password
+            </p>
+          </div>
+        )}
+        <div className={passwordClasses}>
           <label htmlFor="password">Password:</label>
           <input
-            ref={passwordRef}
             type="password"
             id="password"
             onBlur={onBlurPasswordHandler}
+            onChange={passwordChangeHandler}
+            value={enteredPassword}
           />
         </div>
+        {passwordIsInvalid && (
+          <div>
+            <p className={styles.errorText}>
+              Please enter a valid username and password
+            </p>
+          </div>
+        )}
         <Link href="/">Cancel</Link>
         <Button onClick={submitHandler}>Login</Button>
       </form>
