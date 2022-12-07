@@ -1,9 +1,11 @@
 import Link from 'next/link';
+import { FormEvent, MouseEventHandler, useRef } from 'react';
 import styles from './MainHeader.module.css';
 
 export const MainHeader = () => {
   return (
     <header className={styles.header}>
+      <a href='#main' className={styles.skipToMainContentLink}>Skip to main content</a>
       <nav>
         <ul>
           <li>

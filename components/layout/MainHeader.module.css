@@ -27,3 +27,18 @@
 .header li:hover {
   background-color: rgb(118, 180, 118);
 }
+
+.skipToMainContentLink {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: black;
+  color: white;
+  opacity: 0;
+}
+.skipToMainContentLink:focus {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+}

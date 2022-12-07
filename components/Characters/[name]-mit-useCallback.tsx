@@ -3,9 +3,9 @@
 import { ftruncate } from 'fs';
 import { useRouter } from 'next/router';
 import {useCallback, useEffect, useState} from 'react';
-import { CharacterCard } from '../../../components/ui/CharacterCard';
+import { CharacterCard } from '../ui/CharacterCard';
 
-import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../../private/keys';
+import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../private/keys';
 
 import md5 from 'md5';
 

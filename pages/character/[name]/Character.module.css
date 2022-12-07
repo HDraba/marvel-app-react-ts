@@ -1,0 +1,26 @@
+.singleCharacter {
+  text-align: center;
+  box-shadow: 0 0 15px lime;
+  border-radius: 15px;
+  background-color: #208075;
+  margin-left: 10rem;
+  margin-right: 10rem;
+  margin-top: 2rem;
+
+ 
+}
+
+
+.singleCharacter img {
+    width: 500px;
+    height: 500px;
+    margin: auto;
+    display: block;
+}
+
+.descWrapper {
+    padding: 10px;
+    /* margin: 15px; */
+    font-style: italic;
+    font-size: 1.2rem;
+}

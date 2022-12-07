@@ -1,13 +1,14 @@
 // our-domain.com/character/[name]
 
-import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { CharacterCard } from '../../../components/ui/CharacterCard';
-
-import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../../private/keys';
+import { GetServerSideProps } from 'next';
+import { useRouter } from 'next/router';
 
 import md5 from 'md5';
-import { GetServerSideProps } from 'next';
+
+import { CharacterCard } from '../../../components/ui/CharacterCard';
+import { PRIVATE_API_KEY, PUBLIC_API_KEY } from '../../../private/keys';
+import styles from './Character.module.css';
 
 type SingleCharacter = {
   id: number;
@@ -17,28 +18,28 @@ type SingleCharacter = {
 };
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-  const name = context.params?.name
+  const name = context.params?.name;
 
   const timestamp = new Date().getTime();
   const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
   const marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
-  
+
   const response = await fetch(marvelUrl);
   const { data } = await response.json();
   const newCharacterData = data.results[0];
 
-  return {props: {character: newCharacterData }}
+  return { props: { character: newCharacterData } };
 };
 
 type CharacterProps = {
-  character?: SingleCharacter
-}
+  character?: SingleCharacter;
+};
 
-const Character = ({character}: CharacterProps) => {
+const Character = ({ character }: CharacterProps) => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [characterData, setCharacterData] = useState<SingleCharacter | undefined>(
-    character
-  );
+  const [characterData, setCharacterData] = useState<
+    SingleCharacter | undefined
+  >(character);
 
   const router = useRouter();
   const name = router.query.name;
@@ -47,14 +48,14 @@ const Character = ({character}: CharacterProps) => {
   useEffect(() => {
     setIsLoading(true);
     const wrapperAsyncFunction = async () => {
-        const timestamp = new Date().getTime();
-        const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
-        const marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
-        
-        const response = await fetch(marvelUrl);
-        const { data } = await response.json();
-        const newCharacterData = data.results[0];
-        setCharacterData(newCharacterData);
+      const timestamp = new Date().getTime();
+      const newhash = md5(timestamp + PRIVATE_API_KEY + PUBLIC_API_KEY);
+      const marvelUrl = `https://gateway.marvel.com/v1/public/characters?name=${name}&ts=${timestamp}&apikey=${PUBLIC_API_KEY}&hash=${newhash}`;
+
+      const response = await fetch(marvelUrl);
+      const { data } = await response.json();
+      const newCharacterData = data.results[0];
+      setCharacterData(newCharacterData);
 
       setIsLoading(false);
     };
@@ -63,8 +64,8 @@ const Character = ({character}: CharacterProps) => {
 
   console.log('Character Data: ', characterData);
   return (
-    <CharacterCard>
-      {/* <h2>{name}</h2> */}
+    // <CharacterCard>
+    <div className={styles.singleCharacter}>
       {!isLoading && characterData && <h1>{characterData.name}</h1>}
       {!isLoading && characterData && (
         <img
@@ -72,8 +73,13 @@ const Character = ({character}: CharacterProps) => {
           alt={characterData.name}
         />
       )}
-      {!isLoading && characterData && <h2>{characterData.description}</h2>}
-    </CharacterCard>
+      {!isLoading && characterData && (
+        <div className={styles.descWrapper}>
+          <p>{characterData.description}</p>
+        </div>
+      )}
+    </div>
+    // </CharacterCard>
   );
 };
 
