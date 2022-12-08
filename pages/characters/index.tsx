@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { CharacterList } from '../../components/Characters/CharacterList';
+import { MainFooter } from '../../components/layout/MainFooter';
 import { Spinner } from '../../components/ui/Spinner';
 import { fetchingCharacters } from '../../helper/fetchingCharacters';
 
@@ -16,20 +17,16 @@ const Characters = () => {
       setIsLoading(false);
       characters = data;
       console.log(characters);
-      
     });
   }, []); // no dependencies so it loads directly at start and never again
-  
+
   return (
     <>
-    {isLoading && <Spinner />}
-    {!isLoading &&
-    <CharacterList characters={characters}></CharacterList>
-}
+      {isLoading && <Spinner />}
+      {!isLoading && <CharacterList characters={characters}></CharacterList>}
+      {!isLoading && <MainFooter />}
     </>
-  )
-  
+  );
 };
 
 export default Characters;
-
