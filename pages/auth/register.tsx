@@ -5,6 +5,8 @@ import Link from 'next/link';
 import styles from './login.module.css';
 import { Button } from '../../components/ui/Button';
 
+import { FormattedMessage } from 'react-intl';
+
 const Register = () => {
   const [enteredUsername, setEnteredUsername] = useState<string>('');
   const [enteredPassword, setEnteredPassword] = useState<string>('');
@@ -99,7 +101,7 @@ const Register = () => {
       <form className={styles.authWrapper}>
         <h1>Login</h1>
         <div className={usernameClasses}>
-          <label htmlFor="username">Username:</label>
+          <label htmlFor="username"><FormattedMessage id='username'/>:</label>
           <input
             type="text"
             id="username"
@@ -110,11 +112,11 @@ const Register = () => {
         </div>
         {usernameIsInvalid && (
           <div>
-            <p className={styles.errorText}>Please enter a valid username</p>
+            <p className={styles.errorText}><FormattedMessage id='valid-username'/></p>
           </div>
         )}
         <div className={passwordClasses}>
-          <label htmlFor="password">Password:</label>
+          <label htmlFor="password"><FormattedMessage id='password'/>:</label>
           <input
             type="password"
             id="password"
@@ -125,11 +127,11 @@ const Register = () => {
         </div>
         {passwordIsInvalid && (
           <div>
-            <p className={styles.errorText}>Please enter a valid password</p>
+            <p className={styles.errorText}><FormattedMessage id='valid-password'/></p>
           </div>
         )}
         <div className={repeatPasswordClasses}>
-          <label htmlFor="repeatPassword">Repeat Password:</label>
+          <label htmlFor="repeatPassword"><FormattedMessage id='repeat-password'/>:</label>
           <input
             type="password"
             id="repeatPassword"
@@ -140,15 +142,15 @@ const Register = () => {
         </div>
         {repeatPasswordIsInvalid && (
           <div>
-            <p className={styles.errorText}>Repeat the first entered password please</p>
+            <p className={styles.errorText}><FormattedMessage id='repeated-error'/></p>
           </div>
         )}
         {passwordsAreInvalid && (
           <div>
-            <p className={styles.errorText}>Passwords have to be the same</p>
+            <p className={styles.errorText}><FormattedMessage id='repeat-error'/></p>
           </div>
         )}
-        <Link href="/">Cancel</Link>
+        <Link href="/"><FormattedMessage id='cancel-login'/></Link>
         <Button onClick={submitHandler}>Login</Button>
       </form>
     </Card>

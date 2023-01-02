@@ -1,29 +1,53 @@
+// domain.com/
+
 import { MainHeader } from '../components/layout/MainHeader';
 import Link from 'next/link';
 
-import styles from './index.module.css'
+import styles from './index.module.css';
 
-// domain.com/
+import { FormattedMessage } from 'react-intl';
 
 export default function Home() {
   return (
     <div className={styles.home}>
-      <h2>Welcome</h2>
-      <p>My little project to get a better feeling for React and NextJs</p>
+      <h2>
+        <FormattedMessage id="welcome-text" />
+      </h2>
+      <p>
+        <FormattedMessage id="first-desc" />
+      </p>
       <br />
       <h2>
-        Maybe you want to have a look and brief overview about the Marvel
-        Characters? 
+        <FormattedMessage id="inv-chars" />
       </h2>
-      <p>Then try <Link href="/characters">this</Link></p>
+      <p>
+        {/* <FormattedMessage id="inv-chars-try" /> */}
+          <FormattedMessage id="inv-chars-this" values={{
+            b: (chunks) => (
+              <Link data-testid="charactersLink" href="/characters">{chunks}</Link>
+
+            )
+          }} />
+      </p>
       <br />
-      <h2>Maybe you prefer some single Character in detail?</h2>
-      <p>Then <Link href="/character">this</Link> is the right place for you</p>
+      <h2>
+        <FormattedMessage id="inv-char" />
+      </h2>
+      <p>
+        {/* <FormattedMessage id="inv-char-then" /> */}
+        <FormattedMessage
+          id="inv-char-this"
+          values={{
+            a: (chunks) => (
+              <Link data-testid="characterLink" href="/character">
+                {chunks}
+              </Link>
+            ),
+          }}
+        />
+
+        {/* <FormattedMessage id="inv-char-rightPlace" /> */}
+      </p>
     </div>
   );
 }
-
-
-// to do for monday
-// links from durva
-// Card and Button Components 

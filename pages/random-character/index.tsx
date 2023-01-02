@@ -3,6 +3,8 @@ import { CharacterCard } from '../../components/ui/CharacterCard';
 import { Spinner } from '../../components/ui/Spinner';
 import { fetchRandomCharacter } from '../../helper/fetchRandomCharacter';
 
+import { FormattedMessage } from 'react-intl';
+
 type Character = {
   name: string;
   description: string;
@@ -27,10 +29,10 @@ const RandomCharacter = () => {
   return (
     <>
       <div>
-        <h2>Hello mysterious wanderer!</h2>
-        <p>Are you interested in getting some secrets?</p>
+        <h2><FormattedMessage id='rand-char-hello'/></h2>
+        <p><FormattedMessage id='rand-char-question'/></p>
         <button onClick={getRandomCharacterButtonHandler}>
-          Get a random character
+          <FormattedMessage id='get-rand-char'/>
         </button>
       </div>
       {isLoading && <Spinner />}

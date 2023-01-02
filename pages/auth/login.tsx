@@ -5,6 +5,8 @@ import Link from 'next/link';
 
 import styles from './login.module.css';
 
+import { FormattedDate, FormattedMessage } from 'react-intl';
+
 const Login = () => {
   const [enteredUsername, setEnteredUsername] = useState<string>('');
   const [enteredPassword, setEnteredPassword] = useState<string>('');
@@ -13,9 +15,10 @@ const Login = () => {
   const [passwordTouched, setPasswordTouched] = useState<boolean>(false);
 
   let usernameIsValid = enteredUsername.trim() !== '';
-        <div><p className='error-text'>Please enter a valid username and password</p></div>
-        const usernameIsInvalid = !usernameIsValid && usernameTouched;
-  
+  <div>
+    <p className="error-text">Please enter a valid username and password</p>
+  </div>;
+  const usernameIsInvalid = !usernameIsValid && usernameTouched;
 
   let passwordIsValid =
     enteredPassword.trim() !== '' && enteredPassword.length > 5;
@@ -64,42 +67,43 @@ const Login = () => {
     <Card>
       <form className={styles.authWrapper}>
         <h1>Login</h1>
-        <div className={usernameClasses}>
-          <label htmlFor="username">Username:</label>
-          <input
+        <div data-testid="usernameInputDiv" className={usernameClasses}>
+          <label htmlFor="username"><FormattedMessage id='username'/>:</label>
+          <input {...(usernameIsInvalid ? {"aria-invalid": 'true', "aria-describedby": 'usernameInput-error'} : {})}
+            data-testid="usernameInput"
             type="text"
             id="username"
             onBlur={onBlurUsernameHandler}
             onChange={usernameChangeHandler}
             value={enteredUsername}
           />
+          {usernameIsInvalid && (
+            <div id='usernameInput-error'>
+              <p className={styles.errorText}>
+                <FormattedMessage id='valid-username' />
+              </p>
+            </div>
+          )}
         </div>
-        {usernameIsInvalid && (
-          <div>
-            <p className=
-            {styles.errorText}>
-              Please enter a valid username and password
-            </p>
-          </div>
-        )}
-        <div className={passwordClasses}>
-          <label htmlFor="password">Password:</label>
-          <input
+        <div data-testid="passwordInputDiv" className={passwordClasses}>
+          <label htmlFor="password"><FormattedMessage id='password'/>:</label>
+          <input {...(passwordIsInvalid ? {"aria-invalid": 'true', "aria-describedby": 'passwordInput-error'} : {})}
+            data-testid="passwordInput"
             type="password"
             id="password"
             onBlur={onBlurPasswordHandler}
             onChange={passwordChangeHandler}
             value={enteredPassword}
           />
+          {passwordIsInvalid && (
+            <div id='passwordInput-error'>
+              <p className={styles.errorText}>
+                <FormattedMessage id='valid-password'/>
+              </p>
+            </div>
+          )}
         </div>
-        {passwordIsInvalid && (
-          <div>
-            <p className={styles.errorText}>
-              Please enter a valid username and password
-            </p>
-          </div>
-        )}
-        <Link href="/">Cancel</Link>
+        <Link href="/"><FormattedMessage id='cancel-login'/></Link>
         <Button onClick={submitHandler}>Login</Button>
       </form>
     </Card>

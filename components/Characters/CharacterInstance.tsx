@@ -1,6 +1,7 @@
 import SearchCharacter from '../../pages/character';
 import { CharacterCard } from '../ui/CharacterCard';
 import Link from 'next/link';
+import { FormattedMessage } from 'react-intl';
 
 export type CharacterInstanceProps = {
   // id: number;
@@ -22,9 +23,9 @@ export const CharacterInstance = (props: CharacterInstanceProps) => {
       </div>
       {props.image && <img src={props.image} alt={props.name} />}
       <div>
-        {props.description && <p id="desc">Description: {props.description}</p>}
+        {props.description && <p id="desc"><FormattedMessage id='desc'/>: {props.description}</p>}
       </div>
-      <p>Want more? click <Link href={`/character/${props.name}`}>here</Link></p>
+      <p><FormattedMessage id='char-desc'/><Link href={`/character/${props.name}`}>here</Link></p>
     </CharacterCard>
   );
 };

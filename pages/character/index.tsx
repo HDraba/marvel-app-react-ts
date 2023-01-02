@@ -6,6 +6,8 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import styles from './SearchCharacter.module.css';
 
+import { FormattedMessage } from 'react-intl';
+
 const SearchCharacter = () => {
   const router = useRouter()
   const nameRef = useRef<HTMLInputElement>(null);
@@ -21,8 +23,8 @@ const SearchCharacter = () => {
   return (
     <Card>
       <form className={styles.characterForm}>
-        <h1>Search for a specific character of your choice!</h1>
-        <label htmlFor="Character-Name">Character-Name: </label>
+        <h1><FormattedMessage id='char-search-hint'/></h1>
+        <label htmlFor="Character-Name"><FormattedMessage id='char-name'/>: </label>
         <input
           ref={nameRef}
           type="text"
@@ -30,7 +32,7 @@ const SearchCharacter = () => {
           id="Character-Name"
         />
         <br />
-        <Button onClick={searchButtonClickHandler}>Search</Button>
+        <Button onClick={searchButtonClickHandler}><FormattedMessage id='search'/></Button>
       </form>
     </Card>
   );
