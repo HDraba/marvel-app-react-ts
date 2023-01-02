@@ -3,7 +3,7 @@
     "welcome-text": "Welcome!",
     "first-desc": "My little project to get a better feeling for React and NextJs",
     "inv-chars": "Maybe you want to have a look and brief overview about the Marvel Characters?",
-    "inv-chars-this": "Then <b>try</b> this",
+    "inv-chars-this": "Then try <b>this</b>",
     "inv-char": "Maybe you prefer some single Character in detail?",
     "inv-char-this": "Then <a>this</a> is the right place for you",
     "skip": "Skip to main content",
